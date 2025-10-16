@@ -1,0 +1,20 @@
+name: Make PAC File
+
+on:
+  workflow_dispatch:    # اجرای دستی از پنل گیت‌هاب
+  push:                 # اجرای اتوماتیک بعد از هر push
+    branches:
+      - main
+
+jobs:
+  make-pac:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت سورس پروژه
+        uses: actions/checkout@v3
+
+      - name: نصب ابزارهای مورد نیاز
+        run: sudo apt-get update && sudo apt-get install -y curl
+
+      - name: اجرای اسکریپت بررسی پراکسی و ساخت PAC
+        run: bash scripts/check_and_make_pac.sh
