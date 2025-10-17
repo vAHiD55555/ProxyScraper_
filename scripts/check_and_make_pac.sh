@@ -44,12 +44,20 @@ if [[ -f "proxies.txt" ]]; then
   done < proxies.txt
 fi
 
-echo "[*] تعداد کل پراکسی‌ها: ${#PROXIES[@]}" # <-- خط ۶۰ اصلاح شد.
+# خط ۶۰ (اصلاحیه کوتیشن قبلی)
+echo "[*] تعداد کل پراکسی‌ها: ${#PROXIES[@]}"
 
 test_proxy_once() {
-  proxy="$1"
-  proto=""
-  target="$proxy"
+  # متغیر $1 را به یک متغیر محلی اختصاص دهید تا از خطای unbound variable جلوگیری شود
+  # حتی اگر xargs بدون آرگومان اجرا شود، این بخش به صورت شرطی فراخوانی می‌شود.
+  local proxy="$1"
+  local proto=""
+  local target="$proxy"
+  
+  if [[ -z "$proxy" ]]; then
+    return 1 # اگر پراکسی خالی باشد، خارج شوید
+  fi
+  
   if [[ "$proxy" =~ ^socks5 ]]; then
     proto="socks5"
     target="${proxy#*://}"
@@ -83,9 +91,15 @@ export -f test_proxy_once
 export OK_LIST BAD_LIST LOCAL_IP TIMEOUT CHECK_URL
 
 if [[ "$1" == "check" || "$1" == "both" || -z "$1" ]]; then
-  printf "%s\n" "${PROXIES[@]}" | xargs -P $MAX_JOBS -I {} bash -c 'test_proxy_once "$@"' _ {}
-echo "[*] تعداد پراکسی سالم: $(wc -l < "$OK_LIST")"
-echo "[*] تعداد پراکسی خراب: $(wc -l < "$BAD_LIST")"
+  # بررسی وجود پراکسی‌ها قبل از فراخوانی xargs (اصلاحیه جدید)
+  if ((${#PROXIES[@]} > 0)); then
+    printf "%s\n" "${PROXIES[@]}" | xargs -P $MAX_JOBS -I {} bash -c 'test_proxy_once "$@"' _ {}
+  else
+    echo "[*] لیست پراکسی‌ها خالی است. مرحله چک کردن رد شد."
+  fi
+
+  echo "[*] تعداد پراکسی سالم: $(wc -l < "$OK_LIST")"
+  echo "[*] تعداد پراکسی خراب: $(wc -l < "$BAD_LIST")"
 fi
 
 if [[ "$1" == "make" || "$1" == "both" || -z "$1" ]]; then
