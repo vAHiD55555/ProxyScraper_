@@ -44,7 +44,7 @@ if [[ -f "proxies.txt" ]]; then
   done < proxies.txt
 fi
 
-echo "[*] تعداد کل پراکسی‌ها: "+{#PROXIES[@]}"
+echo "[*] تعداد کل پراکسی‌ها: ${#PROXIES[@]}" # <-- خط ۶۰ اصلاح شد.
 
 test_proxy_once() {
   proxy="$1"
