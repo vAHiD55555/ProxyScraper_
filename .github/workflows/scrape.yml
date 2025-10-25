@@ -1,42 +1,23 @@
-name: Auto Update Proxy Pack
+name: Scrape
+
 on:
-  schedule:
-    - cron: '0 */3 * * *'  # اجرا هر 3 ساعت (در ساعت‌های کامل)
-  workflow_dispatch:  # اجازه می‌دهد دستی هم اجرا کنید
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  scrape:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'  # می‌توانید نسخه را تغییر دهید
-
-      - name: Install dependencies
+      - name: Run scraping script
         run: |
-          python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 fake-useragent
-
-      - name: Run scraper script
-        env:  # اگر نیاز به secrets دارید، اینجا اضافه کنید (مثل API keys)
-          SOURCE_URL1: ${{ secrets.SOURCE_URL1 }}  # برای امنیت، لینک‌ها را به عنوان secrets بگذارید
-          SOURCE_URL2: ${{ secrets.SOURCE_URL2 }}
-        run: |
-          # جایگزینی لینک‌ها از environment variables
-          sed -i 's|https://example-proxy-source1.com|'"$SOURCE_URL1"'|g' scrape.py
-          sed -i 's|https://example-proxy-source2.com|'"$SOURCE_URL2"'|g' scrape.py
           python scrape.py
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: proxy-pack
-          path: proxy_pack.txt
-
-      - name: Notify on failure (اختیاری)
-        if: failure()
-        run: echo "Workflow failed, check logs!"
+          name: scraped-data
+          path: data/
