@@ -1,1 +1,1 @@
-<tr><td class='fpl-ip'>36.89.109.82<span class='fpl-port'>:1080</span>:ID</td><td class='hm'>Indonesia
+<tr><td class='fpl-ip'>72.195.34.60<span class='fpl-port'>:27391</span>:US</td><td class='hm'>United States
