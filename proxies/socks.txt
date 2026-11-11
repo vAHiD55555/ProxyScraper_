@@ -1,1 +1,1 @@
-<tr><td class='fpl-ip'>72.195.34.60<span class='fpl-port'>:27391</span>:US</td><td class='hm'>United States
+<tr><td class='fpl-ip'>46.175.122.206<span class='fpl-port'>:1080</span>:RU</td><td class='hm'>Russian Federation
