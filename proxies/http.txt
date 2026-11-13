@@ -1,1 +1,1 @@
-<tr><td class='fpl-ip'>206.245.135.193<span class='fpl-port'>:8888</span>:HTTP
+<tr><td class='hd-ip'>85.132.108.42:3128:AZ</td><td class='hd-anon'>Elite
