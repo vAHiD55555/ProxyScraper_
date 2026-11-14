@@ -1,1 +1,1 @@
-<tr><td class='hd-ip'>85.132.108.42:3128:AZ</td><td class='hd-anon'>Elite
+<tr><td class='hd-ip'>103.70.122.147:8080:ID</td><td class='hd-anon'>Anonymous
