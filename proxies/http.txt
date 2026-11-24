@@ -1,1 +1,1 @@
-<tr><td class='hd-ip'>158.247.125.5:9443:CO</td><td class='hd-anon'>Elite
+<tr><td class='hd-ip'>82.137.90.253:80:BG</td><td class='hd-anon'>Elite
